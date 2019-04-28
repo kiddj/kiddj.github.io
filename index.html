@@ -137,13 +137,13 @@
         console.log("Change address to: ", web3.eth.defaultAccount);
     });
 
-    $("#reg_btn").click(register($('#reg_dname').val(),  $('#reg_addr').val()));
-    $("#query_dname_btn").click(query_n2a($('#query_addr').val()));
-    $("#query_addr_btn").click(query_a2n($('#query_dname').val()));
-    $("#change_btn").click(change_address($('#change_dname').val(), $('#change_addr').val()));
-    $("#transfer_btn").click(transfer_owner($('#transfer_dname').val(), $('#transfer_addr').val()));
-    $("#withdraw_btn").click(withdraw($('#withdraw_amount').val()));
-    $("#destruct_btn").click(destruct());
+    $("#reg_btn").click(function () {register($('#reg_dname').val(),  $('#reg_addr').val());});
+    $("#query_dname_btn").click(function () {query_n2a($('#query_addr').val()); });
+    $("#query_addr_btn").click(function () {query_a2n($('#query_dname').val()); });
+    $("#change_btn").click(function () {change_address($('#change_dname').val(), $('#change_addr').val()); });
+    $("#transfer_btn").click(function () {transfer_owner($('#transfer_dname').val(), $('#transfer_addr').val()); });
+    $("#withdraw_btn").click(function () {withdraw($('#withdraw_amount').val()); });
+    $("#destruct_btn").click(function () {destruct();} );
 
     // Register
     function register(dname, addr) {
