@@ -69,7 +69,7 @@
                 <label for="change_addr">New Address:</label>
                 <input type="text" class="form-control" id="change_addr">
             </div>
-            <a id="reg_btn" href="#" class="btn btn-warning">Change Address</a>
+            <a id="change_btn" href="#" class="btn btn-warning">Change Address</a>
 
             <hr>
 
@@ -83,7 +83,7 @@
                 <label for="transfer_onwer">New Owner:</label>
                 <input type="text" class="form-control" id="transfer_onwer">
             </div>
-            <a id="reg_btn" href="#" class="btn btn-warning">Transfer Ownership</a>
+            <a id="transfer_btn" href="#" class="btn btn-warning">Transfer Ownership</a>
 
             <hr>
 
@@ -94,6 +94,12 @@
                 <input type="text" class="form-control" id="withdraw_amount">
             </div>
             <a id="withdraw_btn" href="#" class="btn btn-success">Withdraw</a>
+
+            <hr>
+
+            <h5 class="card-title">Destruct (Only Contract Owner)</h5>
+            <p class="card-text">Kill Contract.</p>
+            <a id="destruct_btn" href="#" class="btn btn-danger">Destruct Contract</a>
 
         </div>
     </div>
@@ -125,12 +131,115 @@
         });
     });
 
-    $("#reg_btn").click(function () {
-        alert("hello");
-            // ENS.
-                // Courses.setInstructor($("#name").val(), $("#age").val());
+    // Select Address
+    $("#sel_addr").change(function () {
+        web3.eth.defaultAccount = $("#sel_addr option:selected").text();
+        console.log("Change address to: ", web3.eth.defaultAccount);
     });
-    
+
+    $("#reg_btn").click(register($('#reg_dname').val(),  $('#reg_addr').val()));
+    $("#query_dname_btn").click(query_n2a($('#query_addr').val()));
+    $("#query_addr_btn").click(query_a2n($('#query_dname').val()));
+    $("#change_btn").click(change_address($('#change_dname').val(), $('#change_addr').val()));
+    $("#transfer_btn").click(transfer_owner($('#transfer_dname').val(), $('#transfer_addr').val()));
+    $("#withdraw_btn").click(withdraw($('#withdraw_amount').val()));
+    $("#destruct_btn").click(destruct());
+
+    // Register
+    function register(dname, addr) {
+        dname = web3.fromAscii(dname);
+        if (!web3.isAddress(addr)) {
+            alert("Invalid Address " + addr);
+            return;
+        }
+        ENS.register(dname, addr, {
+            from: web3.eth.defaultAccount,
+            value: 100000000000000000
+        }, function (err, txHash) {
+            if (err) console.log("Error: ", err);
+            else console.log("Tx: ", txHash);
+        });
+    }
+
+    // Query (Name => Address)
+    function query_n2a(dname) {
+        dname = web3.fromAscii(dname);
+        ENS.query_n2a(dname, {
+            from: web3.eth.defaultAccount,
+            value: 10000000000000000
+        }, function (err, txHash) {
+            if (err) console.log("Error: ", err);
+            else console.log("Tx: ", txHash);
+        });
+    }
+
+    // Query (Address => Name)
+    function query_a2n(addr) {
+        if (!web3.isAddress(addr)) {
+            alert("Invalid Address " + addr);
+            return;
+        }
+        ENS.query_n2a(addr, {
+            from: web3.eth.defaultAccount,
+            value: 10000000000000000
+        }, function (err, txHash) {
+            if (err) console.log("Error: ", err);
+            else console.log("Tx: ", txHash);
+        });
+    }
+
+    // Change Address
+    function change_address(dname, to_addr) {
+        dname = web3.fromAscii(dname);
+        if (!web3.isAddress(to_addr)) {
+            alert("Invalid Address " + to_addr);
+            return;
+        }
+        ENS.change_address(dname, to_addr, {
+            from: web3.eth.defaultAccount,
+            value: 100000000000000000
+        }, function (err, txHash) {
+            if (err) console.log("Error: ", err);
+            else console.log("Tx: ", txHash);
+        });
+    }
+
+    // Transfer Ownership
+    function transfer_owner(dname, to_owner) {
+        dname = web3.fromAscii(dname);
+        if (!web3.isAddress(to_owner)) {
+            alert("Invalid Address " + to_owner);
+            return;
+        }
+        ENS.transfer_owner(dname, to_owner, {
+            from: web3.eth.defaultAccount,
+            value: 100000000000000000
+        }, function (err, txHash) {
+            if (err) console.log("Error: ", err);
+            else console.log("Tx: ", txHash);
+        });
+    }
+
+    // Withdraw
+    function withdraw(amount) {
+        ENS.withdraw(amount, {
+            from: web3.eth.defaultAccount
+        }, function (err, txHash) {
+            if (err) console.log("Error: ", err);
+            else console.log("Tx: ", txHash);
+        });
+    }
+
+    // Destruct
+    function destruct() {
+        ENS.destruct({
+            from: web3.eth.defaultAccount
+        }, function (err, txHash) {
+            if (err) console.log("Error: ", err);
+            else console.log("Tx: ", txHash);
+        });
+    }
+
 </script>
 </body>
 </html>
