@@ -17,244 +17,120 @@
 <body>
     <div class="card m-3">
         <div class="card-header">
-            ENS (NetworkProject Assignment #3)
+            <h5>ENS (NetworkProject Assignment #3)</h5>
         </div>
         <div class="card-body">
-                <div class="form-group">
-                    <label for="sel_addr">Select Address</label>
-                    <select class="form-control" id="sel_addr"></select>
+            <div class="form-group">
+                <label for="sel_addr">Your Address:</label>
+                <select class="form-control" id="sel_addr"></select>
+            </div>
+            
+            <hr>
+
+            <h5 class="card-title">Register Domain</h5>
+            <p class="card-text">Register new domain. It requires 0.1 ether.</p>
+            <div class="form-group">
+                <label for="reg_dname">New Domain Name:</label>
+                <input type="text" class="form-control" id="reg_dname">
+            </div>
+            <div class="form-group">
+                <label for="reg_addr">Address to Connect:</label>
+                <input type="text" class="form-control" id="reg_addr">
+            </div>
+            <a id="reg_btn" href="#" class="btn btn-primary">Register</a>
+            
+            <hr>
+
+            <h5 class="card-title">Query</h5>
+            <p class="card-text">Query address / domain name. It requires 0.01 ether. (0.005 to contract, 0.005 to holder)</p>
+            
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <button class="btn btn-outline-secondary" type="button" id="query_dname_btn">Search Domain with Address</button>
                 </div>
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+                <input id="query_addr" type="text" class="form-control" placeholder="Enter Address">
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <button class="btn btn-outline-secondary" type="button" id="query_addr_btn">Search Address with Domain</button>
+                </div>
+                <input id="query_dname" type="text" class="form-control" placeholder="Enter Domain">
+            </div>
+
+            <hr>
+
+            <h5 class="card-title">Change Address (Only Domain Owner)</h5>
+            <p class="card-text">Change address connected to your domain. It requires 0.1 ether.</p>
+            <div class="form-group">
+                <label for="change_dname">Domain Name:</label>
+                <input type="text" class="form-control" id="change_dname">
+            </div>
+            <div class="form-group">
+                <label for="change_addr">New Address:</label>
+                <input type="text" class="form-control" id="change_addr">
+            </div>
+            <a id="reg_btn" href="#" class="btn btn-warning">Change Address</a>
+
+            <hr>
+
+            <h5 class="card-title">Transfer Ownership (Only Domain Owner)</h5>
+            <p class="card-text">Transfer ownership of your domain. It requires 0.1 ether.</p>
+            <div class="form-group">
+                <label for="transfer_dname">Domain Name:</label>
+                <input type="text" class="form-control" id="transfer_dname">
+            </div>
+            <div class="form-group">
+                <label for="transfer_onwer">New Owner:</label>
+                <input type="text" class="form-control" id="transfer_onwer">
+            </div>
+            <a id="reg_btn" href="#" class="btn btn-warning">Transfer Ownership</a>
+
+            <hr>
+
+            <h5 class="card-title">Withdraw (Only Contract Owner)</h5>
+            <p class="card-text">Withdraw Ethereum from ENS Contract.</p>
+            <div class="form-group">
+                <label for="withdraw_amount">Amount (wei):</label>
+                <input type="text" class="form-control" id="withdraw_amount">
+            </div>
+            <a id="withdraw_btn" href="#" class="btn btn-success">Withdraw</a>
+
         </div>
     </div>
 <script>
-    if (typeof web3 !== "undefined") web3 = new Web3(web3.currentProvider);
-    // else web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+    let ENS;
+    let ENSAddress = '0x1d0a2077bd1f92ca97ccebfd2d6b9b9fdf60afa2';
+    window.addEventListener('load', function () {
+        if (typeof web3 !== "undefined") web3 = new Web3(web3.currentProvider);
+        else {
+            alert("No currentProvider Found!");
+            console.log("No currentProvider found");
+            return;
+        }
 
-    // set default Account
-    web3.eth.defaultAccount = web3.eth.accounts[0];
-    web3.eth.accounts.forEach(function (account) {
-        let option = $("<option>" + acoount + "</option>");
-        $('#sel_addr').append(option);
+        // set default Account
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+
+        // add address list
+        web3.eth.accounts.forEach(function (account) {
+            let option = $("<option>" + acoount + "</option>");
+            $('#sel_addr').append(option);
+        });
+
+        console.log("web3 address : ", web3.eth.defaultAccount);
+
+        $.getJSON("ENS_ABI.json", function (abi) {
+            ENS = web3.eth.contract(abi).at(ENSAddress);
+            console.log("Load Contract:", ENS);
+        });
     });
 
-    // load contract
-    let ENSContract = web3.eth.contract(
-        [
-            {
-                "constant": false,
-                "inputs": [
-                    {
-                        "name": "dname",
-                        "type": "bytes32"
-                    }
-                ],
-                "name": "query_n2a",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "address"
-                    }
-                ],
-                "payable": true,
-                "stateMutability": "payable",
-                "type": "function"
-            },
-            {
-                "constant": false,
-                "inputs": [
-                    {
-                        "name": "amount",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "withdraw",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "bool"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "constant": false,
-                "inputs": [
-                    {
-                        "name": "dname",
-                        "type": "bytes32"
-                    },
-                    {
-                        "name": "to_owner",
-                        "type": "address"
-                    }
-                ],
-                "name": "transfer_owner",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "bool"
-                    }
-                ],
-                "payable": true,
-                "stateMutability": "payable",
-                "type": "function"
-            },
-            {
-                "constant": true,
-                "inputs": [],
-                "name": "owner",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "address"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "constant": false,
-                "inputs": [
-                    {
-                        "name": "dname",
-                        "type": "bytes32"
-                    },
-                    {
-                        "name": "to_addr",
-                        "type": "address"
-                    }
-                ],
-                "name": "change_address",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "bool"
-                    }
-                ],
-                "payable": true,
-                "stateMutability": "payable",
-                "type": "function"
-            },
-            {
-                "constant": false,
-                "inputs": [
-                    {
-                        "name": "dname",
-                        "type": "bytes32"
-                    },
-                    {
-                        "name": "addr",
-                        "type": "address"
-                    }
-                ],
-                "name": "register",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "bool"
-                    }
-                ],
-                "payable": true,
-                "stateMutability": "payable",
-                "type": "function"
-            },
-            {
-                "constant": false,
-                "inputs": [
-                    {
-                        "name": "addr",
-                        "type": "address"
-                    }
-                ],
-                "name": "query_a2n",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "bytes32"
-                    }
-                ],
-                "payable": true,
-                "stateMutability": "payable",
-                "type": "function"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "dname",
-                        "type": "bytes32"
-                    },
-                    {
-                        "indexed": false,
-                        "name": "addr",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": false,
-                        "name": "holder",
-                        "type": "address"
-                    }
-                ],
-                "name": "e_register",
-                "type": "event"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "dname",
-                        "type": "bytes32"
-                    },
-                    {
-                        "indexed": false,
-                        "name": "addr",
-                        "type": "address"
-                    }
-                ],
-                "name": "e_change_addr",
-                "type": "event"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "dname",
-                        "type": "bytes32"
-                    },
-                    {
-                        "indexed": false,
-                        "name": "owner",
-                        "type": "address"
-                    }
-                ],
-                "name": "e_transfer_owner",
-                "type": "event"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": false,
-                        "name": "amount",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "e_withdraw",
-                "type": "event"
-            }
-        ]
-    );
-    let ENS = ENSContract.at('0x1d0a2077bd1f92ca97ccebfd2d6b9b9fdf60afa2');
-
+    $("#reg_btn").click(function () {
+        alert("hello");
+            // ENS.
+                // Courses.setInstructor($("#name").val(), $("#age").val());
+    });
+    
 </script>
 </body>
 </html>

@@ -1,0 +1,210 @@
+[
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "dname",
+                "type": "bytes32"
+            }
+        ],
+        "name": "query_n2a",
+        "outputs": [
+            {
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "payable": true,
+        "stateMutability": "payable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "withdraw",
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "dname",
+                "type": "bytes32"
+            },
+            {
+                "name": "to_owner",
+                "type": "address"
+            }
+        ],
+        "name": "transfer_owner",
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "payable": true,
+        "stateMutability": "payable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "owner",
+        "outputs": [
+            {
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "dname",
+                "type": "bytes32"
+            },
+            {
+                "name": "to_addr",
+                "type": "address"
+            }
+        ],
+        "name": "change_address",
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "payable": true,
+        "stateMutability": "payable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "dname",
+                "type": "bytes32"
+            },
+            {
+                "name": "addr",
+                "type": "address"
+            }
+        ],
+        "name": "register",
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "payable": true,
+        "stateMutability": "payable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "addr",
+                "type": "address"
+            }
+        ],
+        "name": "query_a2n",
+        "outputs": [
+            {
+                "name": "",
+                "type": "bytes32"
+            }
+        ],
+        "payable": true,
+        "stateMutability": "payable",
+        "type": "function"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "name": "dname",
+                "type": "bytes32"
+            },
+            {
+                "indexed": false,
+                "name": "addr",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "name": "holder",
+                "type": "address"
+            }
+        ],
+        "name": "e_register",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "name": "dname",
+                "type": "bytes32"
+            },
+            {
+                "indexed": false,
+                "name": "addr",
+                "type": "address"
+            }
+        ],
+        "name": "e_change_addr",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "name": "dname",
+                "type": "bytes32"
+            },
+            {
+                "indexed": false,
+                "name": "owner",
+                "type": "address"
+            }
+        ],
+        "name": "e_transfer_owner",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "name": "amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "e_withdraw",
+        "type": "event"
+    }
+]
