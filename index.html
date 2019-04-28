@@ -20,13 +20,7 @@
             <h5>ENS (NetworkProject Assignment #3)</h5>
         </div>
         <div class="card-body">
-            <div class="form-group">
-                <label for="sel_addr">Your Address:</label>
-                <select class="form-control" id="sel_addr"></select>
-            </div>
-            
-            <hr>
-
+            <div id="tx_alert"></div>
             <h5 class="card-title">Register Domain</h5>
             <p class="card-text">Register new domain. It requires 0.1 ether.</p>
             <div class="form-group">
@@ -50,7 +44,7 @@
                 </div>
                 <input id="query_addr" type="text" class="form-control" placeholder="Enter Address">
             </div>
-            <div class="input-group">
+            <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <button class="btn btn-outline-secondary" type="button" id="query_addr_btn">Search Address with Domain</button>
                 </div>
@@ -105,7 +99,7 @@
     </div>
 <script>
     let ENS;
-    let ENSAddress = '0x1d0a2077bd1f92ca97ccebfd2d6b9b9fdf60afa2';
+    let ENSAddress = '0x5e2a1ca740a15e82bb6c3b1ec7bf68e1a2b94b2c';
     window.addEventListener('load', function () {
         if (typeof web3 !== "undefined") web3 = new Web3(web3.currentProvider);
         else {
@@ -116,13 +110,6 @@
 
         // set default Account
         web3.eth.defaultAccount = web3.eth.accounts[0];
-
-        // add address list
-        web3.eth.accounts.forEach(function (account) {
-            let option = $("<option>" + account + "</option>");
-            $('#sel_addr').append(option);
-        });
-
         console.log("web3 address : ", web3.eth.defaultAccount);
 
         $.getJSON("ENS_ABI.json", function (abi) {
@@ -131,19 +118,20 @@
         });
     });
 
-    // Select Address
-    $("#sel_addr").change(function () {
-        web3.eth.defaultAccount = $("#sel_addr option:selected").text();
-        console.log("Change address to: ", web3.eth.defaultAccount);
-    });
-
     $("#reg_btn").click(function () {register($('#reg_dname').val(),  $('#reg_addr').val());});
-    $("#query_dname_btn").click(function () {query_n2a($('#query_addr').val()); });
-    $("#query_addr_btn").click(function () {query_a2n($('#query_dname').val()); });
+    $("#query_dname_btn").click(function () {query_a2n($('#query_addr').val()); });
+    $("#query_addr_btn").click(function () {query_n2a($('#query_dname').val()); });
     $("#change_btn").click(function () {change_address($('#change_dname').val(), $('#change_addr').val()); });
-    $("#transfer_btn").click(function () {transfer_owner($('#transfer_dname').val(), $('#transfer_addr').val()); });
+    $("#transfer_btn").click(function () {transfer_owner($('#transfer_dname').val(), $('#transfer_onwer').val()); });
     $("#withdraw_btn").click(function () {withdraw($('#withdraw_amount').val()); });
     $("#destruct_btn").click(function () {destruct();} );
+
+    // Transaction Alert (for Check results)
+    function tx_alert(event, txHash) {
+        let alert = '<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button>\
+                <strong>' + event + ' Success!</strong> Check Transaction: ' + txHash + '</div>'
+        $("#tx_alert").append(alert);
+    }
 
     // Register
     function register(dname, addr) {
@@ -157,19 +145,7 @@
             value: 100000000000000000
         }, function (err, txHash) {
             if (err) console.log("Error: ", err);
-            else console.log("Tx: ", txHash);
-        });
-    }
-
-    // Query (Name => Address)
-    function query_n2a(dname) {
-        dname = web3.fromAscii(dname);
-        ENS.query_n2a(dname, {
-            from: web3.eth.defaultAccount,
-            value: 10000000000000000
-        }, function (err, txHash) {
-            if (err) console.log("Error: ", err);
-            else console.log("Tx: ", txHash);
+            else tx_alert("Register", txHash);
         });
     }
 
@@ -184,7 +160,19 @@
             value: 10000000000000000
         }, function (err, txHash) {
             if (err) console.log("Error: ", err);
-            else console.log("Tx: ", txHash);
+            else tx_alert("Address Query", txHash);
+        });
+    }
+
+    // Query (Name => Address)
+    function query_n2a(dname) {
+        dname = web3.fromAscii(dname);
+        ENS.query_n2a(dname, {
+            from: web3.eth.defaultAccount,
+            value: 10000000000000000
+        }, function (err, txHash) {
+            if (err) console.log("Error: ", err);
+            else tx_alert("Domain Query", txHash);
         });
     }
 
@@ -200,7 +188,7 @@
             value: 100000000000000000
         }, function (err, txHash) {
             if (err) console.log("Error: ", err);
-            else console.log("Tx: ", txHash);
+            else tx_alert("Address Change", txHash);
         });
     }
 
@@ -216,7 +204,7 @@
             value: 100000000000000000
         }, function (err, txHash) {
             if (err) console.log("Error: ", err);
-            else console.log("Tx: ", txHash);
+            else tx_alert("Owner Transfer", txHash);
         });
     }
 
@@ -226,7 +214,7 @@
             from: web3.eth.defaultAccount
         }, function (err, txHash) {
             if (err) console.log("Error: ", err);
-            else console.log("Tx: ", txHash);
+            else tx_alert("Withdraw", txHash);
         });
     }
 
@@ -236,7 +224,7 @@
             from: web3.eth.defaultAccount
         }, function (err, txHash) {
             if (err) console.log("Error: ", err);
-            else console.log("Tx: ", txHash);
+            else tx_alert("Destruct", txHash);
         });
     }
 
