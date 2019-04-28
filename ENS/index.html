@@ -1,23 +1,19 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>NetworkProject ENS</title>
-
+    <title>ENS (NetworkProject Assignment#3)</title>
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
     <script type="text/javascript" src="./node_modules/jquery/dist/jquery.min.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="./node_modules/web3/dist/web3.min.js"> </script> </head> <body>
 </head>
-
 <body>
     <div class="card m-3">
         <div class="card-header">
-            <h5>ENS (NetworkProject Assignment #3)</h5>
+            <h5>ENS (NetworkProject Assignment#3)</h5>
         </div>
         <div class="card-body">
             <div id="tx_alert"></div>
@@ -25,11 +21,11 @@
             <p class="card-text">Register new domain. It requires 0.1 ether.</p>
             <div class="form-group">
                 <label for="reg_dname">New Domain Name:</label>
-                <input type="text" class="form-control" id="reg_dname">
+                <input type="text" class="form-control" id="reg_dname" placeholder="Enter Domain">
             </div>
             <div class="form-group">
                 <label for="reg_addr">Address to Connect:</label>
-                <input type="text" class="form-control" id="reg_addr">
+                <input type="text" class="form-control" id="reg_addr" placeholder="Enter Address">
             </div>
             <a id="reg_btn" href="#" class="btn btn-primary">Register</a>
             
@@ -57,11 +53,11 @@
             <p class="card-text">Change address connected to your domain. It requires 0.1 ether.</p>
             <div class="form-group">
                 <label for="change_dname">Domain Name:</label>
-                <input type="text" class="form-control" id="change_dname">
+                <input type="text" class="form-control" id="change_dname" placeholder="Enter Domain">
             </div>
             <div class="form-group">
                 <label for="change_addr">New Address:</label>
-                <input type="text" class="form-control" id="change_addr">
+                <input type="text" class="form-control" id="change_addr" placeholder="Enter New Address">
             </div>
             <a id="change_btn" href="#" class="btn btn-warning">Change Address</a>
 
@@ -71,11 +67,11 @@
             <p class="card-text">Transfer ownership of your domain. It requires 0.1 ether.</p>
             <div class="form-group">
                 <label for="transfer_dname">Domain Name:</label>
-                <input type="text" class="form-control" id="transfer_dname">
+                <input type="text" class="form-control" id="transfer_dname" placeholder="Enter Domain">
             </div>
             <div class="form-group">
                 <label for="transfer_onwer">New Owner:</label>
-                <input type="text" class="form-control" id="transfer_onwer">
+                <input type="text" class="form-control" id="transfer_onwer" placeholder="Enter New Owner">
             </div>
             <a id="transfer_btn" href="#" class="btn btn-warning">Transfer Ownership</a>
 
@@ -85,7 +81,7 @@
             <p class="card-text">Withdraw Ethereum from ENS Contract.</p>
             <div class="form-group">
                 <label for="withdraw_amount">Amount (wei):</label>
-                <input type="text" class="form-control" id="withdraw_amount">
+                <input type="text" class="form-control" id="withdraw_amount" placeholder="Amount (wei)">
             </div>
             <a id="withdraw_btn" href="#" class="btn btn-success">Withdraw</a>
 
@@ -99,8 +95,10 @@
     </div>
 <script>
     let ENS;
-    let ENSAddress = '0x8bc2fc0fdc57e35f6dfeac4616eccfb680d72569';
+    let ENSAddress = '0x376279351dc8494ab5f41f73d2477903e7916a1a';
+
     window.addEventListener('load', function () {
+        // Load MetaMask
         if (typeof web3 !== "undefined") web3 = new Web3(web3.currentProvider);
         else {
             alert("No currentProvider Found!");
@@ -108,16 +106,18 @@
             return;
         }
 
-        // set default Account
+        // Set Default Account
         web3.eth.defaultAccount = web3.eth.accounts[0];
         console.log("web3 address : ", web3.eth.defaultAccount);
 
+        // Load Contract
         $.getJSON("ENS_ABI.json", function (abi) {
             ENS = web3.eth.contract(abi).at(ENSAddress);
             console.log("Load Contract:", ENS);
         });
     });
 
+    // Button Action
     $("#reg_btn").click(function () {register($('#reg_dname').val(),  $('#reg_addr').val());});
     $("#query_dname_btn").click(function () {query_a2n($('#query_addr').val()); });
     $("#query_addr_btn").click(function () {query_n2a($('#query_dname').val()); });
@@ -135,6 +135,10 @@
 
     // Register
     function register(dname, addr) {
+        if (!dname) {
+            alert("Invalid Domain!");
+            return;
+        }
         dname = web3.fromAscii(dname);
         if (!web3.isAddress(addr)) {
             alert("Invalid Address " + addr);
@@ -166,6 +170,10 @@
 
     // Query (Name => Address)
     function query_n2a(dname) {
+        if (!dname) {
+            alert("Invalid Domain!");
+            return;
+        }
         dname = web3.fromAscii(dname);
         ENS.query_n2a(dname, {
             from: web3.eth.defaultAccount,
@@ -178,6 +186,10 @@
 
     // Change Address
     function change_address(dname, to_addr) {
+        if (!dname) {
+            alert("Invalid Domain!");
+            return;
+        }
         dname = web3.fromAscii(dname);
         if (!web3.isAddress(to_addr)) {
             alert("Invalid Address " + to_addr);
@@ -194,6 +206,10 @@
 
     // Transfer Ownership
     function transfer_owner(dname, to_owner) {
+        if (!dname) {
+            alert("Invalid Domain!");
+            return;
+        }
         dname = web3.fromAscii(dname);
         if (!web3.isAddress(to_owner)) {
             alert("Invalid Address " + to_owner);
