@@ -155,7 +155,7 @@
             alert("Invalid Address " + addr);
             return;
         }
-        ENS.query_n2a(addr, {
+        ENS.query_a2n(addr, {
             from: web3.eth.defaultAccount,
             value: 10000000000000000
         }, function (err, txHash) {
