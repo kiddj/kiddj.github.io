@@ -35,7 +35,7 @@
 
     // set default Account
     web3.eth.defaultAccount = web3.eth.accounts[0];
-    web3.eth.accountsforEach(function (account) {
+    web3.eth.accounts.forEach(function (account) {
         let option = $("<option>" + acoount + "</option>");
         $('#sel_addr').append(option);
     });
