@@ -91,15 +91,15 @@
 
             <hr>
 
-            <h5 class="card-title">Destruct (Only Contract Owner)</h5>
+            <h5 class="card-title">Kill (Only Contract Owner)</h5>
             <p class="card-text">Kill Contract.</p>
-            <a id="destruct_btn" href="#" class="btn btn-danger">Destruct Contract</a>
+            <a id="kill_btn" href="#" class="btn btn-danger">Kill Contract</a>
 
         </div>
     </div>
 <script>
     let ENS;
-    let ENSAddress = '0x5e2a1ca740a15e82bb6c3b1ec7bf68e1a2b94b2c';
+    let ENSAddress = '0x8bc2fc0fdc57e35f6dfeac4616eccfb680d72569';
     window.addEventListener('load', function () {
         if (typeof web3 !== "undefined") web3 = new Web3(web3.currentProvider);
         else {
@@ -124,7 +124,7 @@
     $("#change_btn").click(function () {change_address($('#change_dname').val(), $('#change_addr').val()); });
     $("#transfer_btn").click(function () {transfer_owner($('#transfer_dname').val(), $('#transfer_onwer').val()); });
     $("#withdraw_btn").click(function () {withdraw($('#withdraw_amount').val()); });
-    $("#destruct_btn").click(function () {destruct();} );
+    $("#kill_btn").click(function () {kill();} );
 
     // Transaction Alert (for Check results)
     function tx_alert(event, txHash) {
@@ -218,13 +218,13 @@
         });
     }
 
-    // Destruct
-    function destruct() {
-        ENS.destruct({
+    // Kill
+    function kill() {
+        ENS.kill({
             from: web3.eth.defaultAccount
         }, function (err, txHash) {
             if (err) console.log("Error: ", err);
-            else tx_alert("Destruct", txHash);
+            else tx_alert("Kill", txHash);
         });
     }
 
