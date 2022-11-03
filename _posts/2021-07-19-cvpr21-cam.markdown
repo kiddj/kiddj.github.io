@@ -1,0 +1,13 @@
+---
+layout: post
+title: "Not just Compete, but Collaborate: Local Image-to-Image Translation via Cooperative Mask Prediction"
+authors: "<strong>Daejin Kim</strong>, Mohammad Azam Khan, and Jaegul Choo"
+date: 2021-07-19
+image: /images/cam-consistency-loss.png
+categories: publication
+venue: "CVPR 2021"
+paper: https://openaccess.thecvf.com/content/CVPR2021/html/Kim_Not_Just_Compete_but_Collaborate_Local_Image-to-Image_Translation_via_Cooperative_CVPR_2021_paper.html
+poster: ../pdfs/cvpr21-cam-consistency-loss-poster.pdf
+---
+· Improve the existing face editing methods by preserving the attribute-irrelevant regions using Grad-CAM.<br>
+· Propose a novel loss that allows the generator and the discriminator to collaborate.

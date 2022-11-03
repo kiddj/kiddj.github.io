@@ -1,0 +1,11 @@
+---
+layout: post
+position: "Software Engineer"
+company: "Purdue University"
+date: 2019-09-01
+to: 2019-12-01
+categories: experience
+---
+Participate in the IITP Purdue Capstone program at Purdue College of Information Technology, sponsored by the Korean IITP (Institute of Information & Communications Technology Planning & Evaluation).
+
+Implementing AI commentator for robotic soccer.

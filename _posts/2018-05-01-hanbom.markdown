@@ -1,0 +1,10 @@
+---
+layout: post
+position: "Python & Machine Learning and Big Data Analytics Lecturer"
+company: "Hanbom High School"
+date: 2018-05-01
+to: 2019-05-01
+categories: experience
+# venue: "CIKM 2022"
+# paper: https://arxiv.org/abs/2209.05406
+---

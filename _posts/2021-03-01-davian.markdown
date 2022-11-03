@@ -1,0 +1,8 @@
+---
+layout: post
+position: "Masters Student"
+company: "<a href='http://davian.kaist.ac.kr/' target='_blank'>DAVIAN</a>, KAIST AI (Advisor: <a href='https://sites.google.com/site/jaegulchoo/' target='_blank'>Jaegul Choo</a>)"
+date: 2021-03-01
+to: Current
+categories: experience
+---

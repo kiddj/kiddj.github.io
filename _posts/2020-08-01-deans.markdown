@@ -1,0 +1,10 @@
+---
+layout: post
+title: "Dean's List"
+from: "Sungkyunkwan University"
+date: 2020-08-01
+categories: award
+multiple_dates: Aug, 2020 / Aug, 2019 / Mar, 2019 / Aug, 2018 / Mar, 2018 / Aug, 2017
+# venue: "CIKM 2022"
+# paper: https://arxiv.org/abs/2209.05406
+---

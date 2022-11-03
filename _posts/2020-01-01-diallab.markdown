@@ -1,0 +1,8 @@
+---
+layout: post
+position: "Undergraduate Research Assistant"
+company: "<a href='https://diallab.github.io/' target='_blank'>DIALLab</a>, Sungkyunkwan University (Advisor: <a href='https://jongwuklee.weebly.com/' target='_blank'>Jongwuk Lee</a>)"
+date: 2020-01-01
+to: 2021-02-01
+categories: experience
+---
