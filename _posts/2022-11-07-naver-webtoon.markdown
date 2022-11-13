@@ -1,7 +1,7 @@
 ---
 layout: post
-position: "AI Research Internship"
-company: "Naver Webtoon Corp."
+position: "Internship at NAVER WEBTOON AI Research Lab"
+company: "NAVER WEBTOON Corp."
 date: 2022-11-07
 to: Current
 categories: experience
