@@ -7,6 +7,7 @@ image: /images/wavebound.png
 categories: publication
 venue: "NeurIPS 2022"
 paper: https://arxiv.org/abs/2210.14303
+presentation: https://youtu.be/G73pTcTEb34
 ---
 · Introduce the dynamic error bounds to address the overfitting issue in time series forecasting.<br>
 · Propose a novel regularization method that estimates the training loss inevitably occurs in noisy patterns.

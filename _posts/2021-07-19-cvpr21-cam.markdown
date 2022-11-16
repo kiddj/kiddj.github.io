@@ -8,6 +8,7 @@ categories: publication
 venue: "CVPR 2021"
 paper: https://openaccess.thecvf.com/content/CVPR2021/html/Kim_Not_Just_Compete_but_Collaborate_Local_Image-to-Image_Translation_via_Cooperative_CVPR_2021_paper.html
 poster: ../pdfs/cvpr21-cam-consistency-loss-poster.pdf
+presentation: https://youtu.be/cL3LHCe_Z8k
 ---
 · Improve the existing face editing methods by preserving the attribute-irrelevant regions using Grad-CAM.<br>
 · Propose a novel loss that allows the generator and the discriminator to collaborate.

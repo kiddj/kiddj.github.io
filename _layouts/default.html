@@ -113,6 +113,9 @@
               {% if post.poster %}
               <a href="{{post.poster}}", target="_blank">[Poster]</a>&nbsp;
               {% endif %}
+              {% if post.presentation %}
+              <a href="{{post.presentation}}", target="_blank">[Presentation]</a>&nbsp;
+              {% endif %}
               <p></p>
               {{ post.excerpt }}
             </td>
